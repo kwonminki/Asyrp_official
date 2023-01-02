@@ -22,7 +22,7 @@ This repo includes the official Pytorch implementation of **Asyrp**: Diffusion M
 We recommend running our code using NVIDIA GPU + CUDA, CuDNN.
 
 ### Pretrained Models for Asyrp
-To manipulate soure images, the pretrained Diffuson models are required.
+Asyrp works on the checkpoints of pretrained diffusion models.
 
 
 | Image Type to Edit |Size| Pretrained Model | Dataset | Reference Repo. 
@@ -58,6 +58,26 @@ If you want to use custom dataset, you can use `config/custom.yml` file.
 --custom_test_dataset_dir "your/costom/dataset/dir/test"      \
 ```
 
+### Get LPIPS distance
+We provide precomputed LPIPS distances for `CelebA_HQ`, `LSUN-Bedroom`, `LSUN-Church`, `AFHQ-Dog`, and `METFACES` in the `./utils`.
+
+If you want to use the custom dataset, we recommand to precompute LPIPS distance.
+
+To precompute LPIPS distance for automatically defined t_edit & t_boost, run the following commands using `script_get_lpips.sh`.
+```
+python main.py  --lpips                  \
+                --config $config         \
+                --exp ./runs/tmp         \
+                --edit_attr test         \
+                --n_train_img 100        \
+                --n_inv_step 1000   
+```
+- `$config` : `celeba.yml` for human face, `bedroom.yml` for bedroom, `church.yml` for church, `afhq.yml` for dog face, `imagenet.yml` for images from ImageNet, `metface.yml` for artistic face from METFACES, `ffqh.yml` for human face from FFHQ.
+- `exp`: Experiment name.
+- `edit_attr`: Attribute to edit. But not used for now. you can use `./utils/text_dic.py` to predefined source-target text pairs or define new pair. 
+- `n_train_img` : LPIPS distance from # of images.
+- `n_inv_step` : # of steps during the generative pross for the inversion. You can use `--n_inv_step 50` for speed. 
+
 
 ## Asyrp
 To train the implicit function f, you can prepare two optional things. 1) get LPIPS distances 2) precompute
@@ -75,22 +95,6 @@ For that case you can use the below argument:
 ```
 --load_random_noise
 ```
-
-### Get LPIPS distance
-To precompute LPIPS distance for automatically defined t_edit & t_boost, run the following commands using `script_get_lpips.sh`.
-```
-python main.py  --lpips                  \
-                --config $config         \
-                --exp ./runs/tmp         \
-                --edit_attr test         \
-                --n_train_img 100        \
-                --n_inv_step 1000   
-```
-- `$config` : `celeba.yml` for human face, `bedroom.yml` for bedroom, `church.yml` for church, `afhq.yml` for dog face, `imagenet.yml` for images from ImageNet, `metface.yml` for artistic face from METFACES, `ffqh.yml` for human face from FFHQ.
-- `exp`: Experiment name.
-- `edit_attr`: Attribute to edit. But not used for now. you can use `./utils/text_dic.py` to predefined source-target text pairs or define new pair. 
-- `n_train_img` : LPIPS distance from # of images.
-- `n_inv_step` : # of steps during the generative pross for the inversion. You can use `--n_inv_step 50` for speed. 
 
 ### Precompute real images
 To precompute real images for saving time, run the follwing commands using `script_precompute.sh`.
