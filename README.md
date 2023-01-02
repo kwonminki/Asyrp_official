@@ -13,11 +13,9 @@ Diffusion models achieve outstanding generative performance in various domains. 
  
 
 ## Description
-This repo includes the official Pytorch implementation of **Asyrp**, Diffusion Models already have a Semantic Latent Space, and **DiffStyle**, Training-free Style Transfer Emerges from h-space in Diffusion models.
+This repo includes the official Pytorch implementation of **Asyrp**, Diffusion Models already have a Semantic Latent Space.
 
 - Utilizing the *h-space*, bottleneck of U-Net, as a semantic latent space, **Asyrp** allows for the manipulation of real images through diffusion models.
-
-- **DiffStyle** offers training-free content mixing and style transfer capabilities by using *h-space* of diffusion models.
 
 
 ## Getting Started
