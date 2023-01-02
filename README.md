@@ -199,8 +199,7 @@ python main.py  --run_test                    \
                 --multiple_hs_coeff "1 0.5 1.5"
 
                 (optional - quality)
-                --dt_lambda $dt_lambda        
-                --warigari                    
+                --dt_lambda $dt_lambda                          
 ```
 - `exp` : is should be matched with trained exp. If you want to use our pretrained implicit function, you have to set `--exp` as `$guid`.
 - `do_train`, `do_test`: Sampling from training dataset / test dataset.
