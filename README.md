@@ -89,6 +89,8 @@ python main.py  --lpips                  \
 ## Asyrp
 To train the implicit function f, you can prepare two optional things. 1) get LPIPS distances 2) precompute
 
+We alredy provide precomputed LPIPS distances for `CelebA_HQ`, `LSUN-Bedroom`, `LSUN-Church`, `AFHQ-Dog`, and `METFACES` in the `./utils`.
+
 If you want to use your own defined-t_edit (e.g., 500) and defined-t_boost (e.g., 200), you don't need to get LPIPS distances.
 
 For that case, you can can use the below arguments:
