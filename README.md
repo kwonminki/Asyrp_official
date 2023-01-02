@@ -17,6 +17,13 @@ This repo includes the official Pytorch implementation of **Asyrp**: Diffusion M
 
 - **Asyrp** allows using *h-space*, the bottleneck of the U-Net, as a semantic latent space of diffusion models.
 
+![image](https://user-images.githubusercontent.com/33779055/210209549-500e57d1-0a38-4167-a437-f1dcc44b5a5a.png) ![image](https://user-images.githubusercontent.com/33779055/210209586-096ec082-f2d2-4690-84c9-ce0143361069.png) ![image](https://user-images.githubusercontent.com/33779055/210209619-6091bf02-e81b-468f-a2d0-df893040ab66.png)
+
+Edited real images (Top) as `Happy dog` (Bottom). So cute!!
+
+
+
+
 
 ## Getting Started
 We recommend running our code using NVIDIA GPU + CUDA, CuDNN.
