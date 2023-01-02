@@ -52,7 +52,7 @@ You can simply modify `./configs/paths_config.py` for dataset path.
 If you want to use custom dataset, you can use `config/custom.yml` file.
 - You have to match `data.dataset` in `custom.yml` with your data domain. For example, if you want to use Human Face images, `data.dataset` should be `CelebA_HQ` or `FFHQ`. 
 - `data.category` should be `'CUSTOM'`
-- Then, you can simply use arguments:
+- Then, you can use the below arguments:
 ```
 --custom_train_dataset_dir "your/costom/dataset/dir/train"    \
 --custom_test_dataset_dir "your/costom/dataset/dir/test"      \
@@ -64,14 +64,14 @@ To train the implicit function f, you can prepare two optional things. 1) get LP
 
 If you want to use your own defined-t_edit (e.g., 500) and defined-t_boost (e.g., 200), you don't need to get LPIPS distances.
 
-For that case, you can simply use arguments :
+For that case, you can can use the below arguments:
 ```
 --user_defined_t_edit 500       \
 --user_defined_t_addnoise 200   \
 ```
 
 If you want to train with sampled images, you don't need to precompute real images.
-For that case you can simply use argument :
+For that case you can use the below argument:
 ```
 --load_random_noise
 ```
