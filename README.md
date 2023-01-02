@@ -36,8 +36,8 @@ To manipulate soure images, the pretrained Diffuson models are required.
 | ImageNet |256x256| [Diffusion](https://openaipublic.blob.core.windows.net/diffusion/jul-2021/256x256_diffusion_uncond.pt) | [ImageNet](https://image-net.org/index.php) | [Guided Diffusion](https://github.com/openai/guided-diffusion)
 
 - The pretrained Diffuson models on 256x256 images in [CelebA-HQ](https://arxiv.org/abs/1710.10196), [LSUN-Church](https://www.yf.io/p/lsun), and [LSUN-Bedroom](https://www.yf.io/p/lsun) are automatically downloaded in the code. (codes from [DiffusionCLIP](https://github.com/gwang-kim/DiffusionCLIP))
-- In contrast, you need to download the models pretrained on other datasets in the table and put it in `./pretrained` directory. 
-- You can manually revise the checkpoint paths and names in `./configs/paths_config.py` file.
+- In contrast, you need to download the models pretrained on other datasets in the table and put it in the `./pretrained` directory. 
+- You can manually revise the checkpoint paths and names in the `./configs/paths_config.py` file.
 
 
 ### Datasets 
@@ -49,7 +49,7 @@ If you want to use **real images**, check the URLs :
 You can simply modify `./configs/paths_config.py` for dataset path.
 
 ### CUSTOM Datasets
-If you want to use costom dataset, you can use `config/custom.yml` file.
+If you want to use custom dataset, you can use `config/custom.yml` file.
 - You have to match `data.dataset` in `custom.yml` with your data domain. For example, if you want to use Human Face images, `data.dataset` should be `CelebA_HQ` or `FFHQ`. 
 - `data.category` should be `'CUSTOM'`
 - Then, you can simply use arguments:
