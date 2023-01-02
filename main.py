@@ -335,10 +335,6 @@ def main():
             runner.run_test()
         elif args.lpips:
             runner.compute_lpips_distance()
-        elif args.diff_style:
-            if not os.path.exists(args.save_dir):
-                os.makedirs(args.save_dir)
-            runner.diff_style()
 
     except Exception:
         logging.error(traceback.format_exc())

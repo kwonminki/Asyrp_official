@@ -214,34 +214,6 @@ python main.py  --run_test                    \
 - `--multiple_attr`: If you use multiple attributes, write down the name of exps (use blanks as separators). You can use `--multiple_hs_coeff` to regulate the degree of editing respectively.
 - `dt_lambda` : From DiffStyle. If you use a kind of `0.998`, the quality can be better.
 
-## DiffStyle
-
-We provide the simple inference script for DiffStyle. (`script_diffstyle.sh`)
-```
-config="celeba.yml"
-save_dir="./save_dir"   # output directory
-content_dir="./test_images/contents"
-style_dir="./test_images/styles"
-h_gamma=0.7             # Slerp ratio
-dt_lambda=0.9985        # 1.0 for out-of-domain style transfer.
-t_boost=200             # 0 for out-of-domain style transfer.
-n_gen_step=1000
-n_inv_step=50
-
-python main.py  --diff_style                  \
-                --content_dir $content_dir    \
-                --style_dir $style_dir        \
-                --save_dir $save_dir          \
-                --config $config              \
-                --n_gen_step $n_gen_step      \
-                --n_inv_step $n_inv_step      \
-                --n_test_step 1000            \
-                --dt_lambda $dt_lambda        \
-                --hs_coeff $h_gamma           \
-                --t_noise $t_boost            \
-                --sh_file_name $sh_file_name  \
-```
-- Determine `content_dir`, `style_dir`, `save_dir`.
 
 ## Acknowledge
 Codes are based on DiffusionCLIP.
