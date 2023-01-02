@@ -21,7 +21,7 @@ This repo includes the official Pytorch implementation of **Asyrp**: Diffusion M
 ## Getting Started
 We recommend running our code using NVIDIA GPU + CUDA, CuDNN.
 
-### Pretrained Models for Asyrp & DiffStyle
+### Pretrained Models for Asyrp
 To manipulate soure images, the pretrained Diffuson models are required.
 
 
