@@ -105,46 +105,5 @@ def denoising_step(xt, t, t_next, *,
 
     # Warigari by young-hyun, Not in the paper
     else:
-        # quite complicated
-        new_P_xt = x0_t
-        # get original things
-        P_xt = (xt - et * (1 - at).sqrt()) / at.sqrt()
-
-        # regularization (var)
-        var_P_xt     = P_xt - P_xt.mean(dim=[1,2,3])[:,None,None,None]
-        var_new_P_xt = new_P_xt - new_P_xt.mean(dim=[1,2,3])[:,None,None,None]
-        new_P_xt = new_P_xt.mean(dim=[1,2,3])[:,None,None,None] + var_new_P_xt * (var_P_xt.std(dim=[1,2,3]) / var_new_P_xt.std(dim=[1,2,3]))[:,None,None,None]
-
-        # find new_xt s.t. new_P_xt = P(xt)
-        # de_dx = 0.99
-        # dx = at.sqrt() / (1 - (1-at).sqrt() * de_dx) * (new_P_xt - P_xt)
-
-        dx0 = new_P_xt - P_xt
-        det = et_modified - et
-        w = warigari
-        dx = at.sqrt()*dx0 + w*(1-at).sqrt()*det
-        
-        xt += dx
-
-        # get original DDIM process with new xt
-
-        et, _, _, _ = model(xt, t)
-
-        if learn_sigma:
-            et, logvar_learned = torch.split(et, et.shape[1] // 2, dim=1)
-            logvar = logvar_learned
-        else:
-            logvar = extract(logvars, t, xt.shape)
-
-        x0_t = (xt - et * (1 - at).sqrt()) / at.sqrt()
-
-        # Deterministic.
-        if eta == 0:
-            xt_next = at_next.sqrt() * x0_t + (1 - at_next).sqrt() * et
-        # Add noise. When eta is 1 and time step is 1000, it is equal to ddpm.
-        else:
-            c1 = eta * ((1 - at / (at_next)) * (1 - at_next) / (1 - at)).sqrt()
-            c2 = ((1 - at_next) - c1 ** 2).sqrt()
-            xt_next = at_next.sqrt() * x0_t + c2 * et + c1 * torch.randn_like(xt)
-
+        # will be updated
         return xt_next, x0_t, delta_h, middle_h

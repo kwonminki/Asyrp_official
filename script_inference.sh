@@ -5,8 +5,7 @@ gpu="0"
 config="custom.yml"
 guid="smiling"
 test_step=50    # if large, it takes long time.
-dt_lambda=1.0   # hyperparameter for dt_lambda.
-warigari=0.0    # hyperparameter for warigari. This is the method that will appear in the next paper.
+dt_lambda=1.0   # hyperparameter for dt_lambda. This is the method that will appear in the next paper.
 
 CUDA_VISIBLE_DEVICES=$gpu python main.py --run_test                         \
                         --config $config                                    \
@@ -32,7 +31,6 @@ CUDA_VISIBLE_DEVICES=$gpu python main.py --run_test                         \
                         --custom_train_dataset_dir "test_images/celeba/styles"                   \
                         --custom_test_dataset_dir "test_images/celeba/contents"                  \
                         --manual_checkpoint_name "smiling_LC_CelebA_HQ_t999_ninv40_ngen40_0.pth" \
-                        --warigari $warigari                                \
                         --add_noise_from_xt                                 \
                         --lpips_addnoise_th 1.2                             \
                         --lpips_edit_th 0.33                                \
