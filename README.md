@@ -13,9 +13,9 @@ Diffusion models achieve outstanding generative performance in various domains. 
  
 
 ## Description
-This repo includes the official Pytorch implementation of **Asyrp**, Diffusion Models already have a Semantic Latent Space.
+This repo includes the official Pytorch implementation of **Asyrp**: Diffusion Models already have a Semantic Latent Space.
 
-- Utilizing the *h-space*, bottleneck of U-Net, as a semantic latent space, **Asyrp** allows for the manipulation of real images through diffusion models.
+- **Asyrp** allows using *h-space*, the bottleneck of the U-Net, as a semantic latent space of diffusion models.
 
 
 ## Getting Started
