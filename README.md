@@ -49,7 +49,7 @@ If you want to use **real images**, check the URLs :
 You can simply modify `./configs/paths_config.py` for dataset path.
 
 ### CUSTOM Datasets
-If you want to use custom dataset, you can use `config/custom.yml` file.
+If you want to use a custom dataset, you can use the `config/custom.yml` file.
 - You have to match `data.dataset` in `custom.yml` with your data domain. For example, if you want to use Human Face images, `data.dataset` should be `CelebA_HQ` or `FFHQ`. 
 - `data.category` should be `'CUSTOM'`
 - Then, you can use the below arguments:
@@ -61,7 +61,7 @@ If you want to use custom dataset, you can use `config/custom.yml` file.
 ### Get LPIPS distance
 We provide precomputed LPIPS distances for `CelebA_HQ`, `LSUN-Bedroom`, `LSUN-Church`, `AFHQ-Dog`, and `METFACES` in the `./utils`.
 
-If you want to use the custom dataset, we recommand to precompute LPIPS distance.
+If you want to use the custom/other dataset, we recommand to precompute LPIPS distance.
 
 To precompute LPIPS distance for automatically defined t_edit & t_boost, run the following commands using `script_get_lpips.sh`.
 ```
@@ -201,9 +201,6 @@ python main.py  --run_test                    \
                 (optinal - multi)
                 --multiple_attr "exp1 exp2 exp3"
                 --multiple_hs_coeff "1 0.5 1.5"
-
-                (optional - quality)
-                --dt_lambda $dt_lambda                          
 ```
 - `exp` : is should be matched with trained exp. If you want to use our pretrained implicit function, you have to set `--exp` as `$guid`.
 - `do_train`, `do_test`: Sampling from training dataset / test dataset.
@@ -213,7 +210,6 @@ python main.py  --run_test                    \
 - `--load_from_checkpoint`, `--manual_checkpoint_name` : `load_from_checkpoint` should be the name of exp. `manual_checkpoint_name` should be the full path of checkpoint.
 - `--delta_interpolation`: You can set $max, $min, $num values. The $num of results will use gradually increased dgree of editing from min to max.
 - `--multiple_attr`: If you use multiple attributes, write down the name of exps (use blanks as separators). You can use `--multiple_hs_coeff` to regulate the degree of editing respectively.
-- `dt_lambda` : From DiffStyle. If you use a kind of `0.998`, the quality can be better.
 
 
 ## Acknowledge
