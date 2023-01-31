@@ -494,12 +494,6 @@ class DDPM(nn.Module):
             if i_level != self.num_resolutions - 1:
                 hs.append(self.down[i_level].downsample(hs[-1]))
             
-            # print(f"down({i_level})->hs[-1].shape,:{hs[-1].shape}")
-
-        # print("hs_list")
-        # for i in range(len(hs)):
-        #     print(f"hs[{i}].shape:{hs[i].shape}")
-        # import pdb; pdb.set_trace()
 
         # middle
 
@@ -521,7 +515,7 @@ class DDPM(nn.Module):
                         delta_h = getattr(self, f"layer_{i}")(h, None if ignore_timestep else temb)
                         h2 += delta_h * hs_coeff[i+1]
                 # use input delta_h  : even tough you does not use DeltaBlock, you need to use index is 0.
-                else: # DiffStyle
+                else: # DiffStyle; Just ignore this code. We will update about it in README.md later.
                     if use_mask:
                         mask = torch.zeros_like(h)
                         mask[:,:,4:-1,3:5] = 1.0
@@ -532,7 +526,6 @@ class DDPM(nn.Module):
 
                         partial_h2 = slerp(1-hs_coeff[0], masked_h, masked_delta_h)
                         h2 = partial_h2 + inverted_mask * h
-
 
                     else:
                         h_shape = h.shape
@@ -547,37 +540,6 @@ class DDPM(nn.Module):
             # when t[0] < t_edit : pass the delta_h
             else:
                 h2 = h
-            #     h2 = h
-            # else:   #DiffStyle
-            #     assert (x.shape[0] == 1) # This diffStyle code only supports batch_size == 1
-            #     if t[0] >= t_edit:
-            #         if use_mask:
-            #             mask = torch.zeros_like(h)
-            #             mask[:,:,4:-1,3:5] = 1.0
-            #             inverted_mask = 1 - mask
-
-            #             masked_delta_h = delta_h * mask
-            #             masked_h = h * mask
-
-            #             partial_h2 = slerp(1-hs_coeff[0], masked_h, masked_delta_h)
-            #             h2 = partial_h2 + inverted_mask * h
-
-
-            #         else:
-            #             h_shape = h.shape
-            #             h_copy = h.clone().view(h_shape[0],-1)
-            #             delta_h_copy = delta_h.clone().view(h_shape[0],-1)
-
-            #             h_norm = torch.norm(h_copy, dim=1).unsqueeze(-1).unsqueeze(-1).unsqueeze(-1)
-            #             delta_h_norm = torch.norm(delta_h_copy, dim=1).unsqueeze(-1).unsqueeze(-1).unsqueeze(-1)
-            #             normalized_delta_h = h_norm * delta_h / delta_h_norm
-                        
-            #             h2 = slerp(1.0-hs_coeff[0], h, normalized_delta_h)
-            #     else:
-            #         h2 = h
-
-
-
 
             hs_index = -1
 
@@ -644,12 +606,6 @@ class DDPM(nn.Module):
             if i_level != self.num_resolutions - 1:
                 hs.append(self.down[i_level].downsample(hs[-1]))
             
-            # print(f"down({i_level})->hs[-1].shape,:{hs[-1].shape}")
-
-        # print("hs_list")
-        # for i in range(len(hs)):
-        #     print(f"hs[{i}].shape:{hs[i].shape}")
-        # import pdb; pdb.set_trace()
 
         # middle
 
@@ -721,114 +677,6 @@ class DDPM(nn.Module):
 
         return h, h2, delta_h, middle_h
 
-
-
-    def forward_backup(self, x, t, index=None, maintain=400, rambda=1.0, origin=False, return_delta_h=False, delta_h=None, return_middle_h=False):
-        assert x.shape[2] == x.shape[3] == self.resolution
-
-
-        # timestep embedding
-        temb = get_timestep_embedding(t, self.ch)
-        temb = self.temb.dense[0](temb)
-        temb = nonlinearity(temb)
-        temb = self.temb.dense[1](temb)
-
-        # downsampling
-        hs = [self.conv_in(x)]
-        for i_level in range(self.num_resolutions):
-            for i_block in range(self.num_res_blocks):
-                h = self.down[i_level].block[i_block](hs[-1], temb)
-                if len(self.down[i_level].attn) > 0:
-                    h = self.down[i_level].attn[i_block](h)
-                hs.append(h)
-            if i_level != self.num_resolutions - 1:
-                hs.append(self.down[i_level].downsample(hs[-1]))
-
-        # middle
-        h = hs[-1]
-        h = self.mid.block_1(h, temb)
-        h = self.mid.attn_1(h)
-        h = self.mid.block_2(h, temb)
-
-        if return_middle_h:
-            middle_h = h
-
-        if index is not None:
-            if origin:
-                if t[0] >= maintain:
-                    delta_h = getattr(self, f"layer_{index}")(h, temb)  #.roll(1, dims=3)
-                    h = h + delta_h*rambda
-            else:
-                if t[0] >= maintain:
-                    if delta_h is None:   
-                        delta_h = getattr(self, f"layer_{index}")(h, temb)  #.roll(1, dims=3)
-                        h2 = h + delta_h*rambda
-                    # else:
-                    #     delta_h = delta_h.repeat(h.shape[0],1,1,1)
-                    # if rambda != 0:
-                    #     h2 = h + torch.randn_like(h)*torch.std(h)
-                    # else:
-                    #     h2 = h
-                    else:
-                        #before
-                        # h2 = h + delta_h*rambda
-                        #after 07.07
-                        if delta_h == 0:
-                            h2 = h + self.delta_h
-                            
-                        else:
-                            h2 = (h + delta_h) #/ 2**(1/2)
-                        # h2 = h*0.2 + delta_h*0.8 #/ 2**(1/2)
-                else:
-                    h2 = h
-                
-                if return_middle_h:
-                    middle_h = h2
-
-                hs_index = -1
-
-                for i_level in reversed(range(self.num_resolutions)):
-                    for i_block in range(self.num_res_blocks + 1):
-                        h2 = self.up[i_level].block[i_block](
-                            torch.cat([h2, hs[hs_index]], dim=1), temb)
-                        hs_index -= 1
-                        if len(self.up[i_level].attn) > 0:
-                            h2 = self.up[i_level].attn[i_block](h2)
-                    if i_level != 0:
-                        h2 = self.up[i_level].upsample(h2)
-
-                # end
-                h2 = self.norm_out(h2)
-                h2 = nonlinearity(h2)
-                h2 = self.conv_out(h2)
-
-        # upsampling
-        for i_level in reversed(range(self.num_resolutions)):
-            for i_block in range(self.num_res_blocks + 1):
-                h = self.up[i_level].block[i_block](
-                    torch.cat([h, hs.pop()], dim=1), temb)
-                if len(self.up[i_level].attn) > 0:
-                    h = self.up[i_level].attn[i_block](h)
-            if i_level != 0:
-                h = self.up[i_level].upsample(h)
-
-        # end
-        h = self.norm_out(h)
-        h = nonlinearity(h)
-        h = self.conv_out(h)
-
-        if index is not None and not origin:
-            if return_delta_h:
-                return h, h2, delta_h
-            elif return_middle_h:
-                return h, h2, middle_h
-            else:
-                return h, h2
-        else:
-            if return_middle_h:
-                return h, middle_h
-            else:
-                return h
 
 
     def multiple_attr(self, x, t, index=None, maintain=400, rambda=(1.0,1.0)):

@@ -1,5 +1,5 @@
 
-# Diffusion Models already have a Semantic Latent Space 
+# Diffusion Models already have a Semantic Latent Space (ICLR2023 notable-top-25%)
 
 [![arXiv](https://img.shields.io/badge/arXiv-2110.02711-red)](https://arxiv.org/abs/2210.10960) [![project_page](https://img.shields.io/badge/project_page-orange)](https://kwonminki.github.io/Asyrp/)
 
@@ -35,6 +35,7 @@ Asyrp works on the checkpoints of pretrained diffusion models.
 | Image Type to Edit |Size| Pretrained Model | Dataset | Reference Repo. 
 |---|---|---|---|---
 | Human face |256×256| Diffusion (Auto) | [CelebA-HQ](https://arxiv.org/abs/1710.10196) | [SDEdit](https://github.com/ermongroup/SDEdit)
+| Human face |256×256| [Diffusion](https://1drv.ms/u/s!AkQjJhxDm0Fyhqp_4gkYjwVRBe8V_w?e=Et3ITH) | [CelebA-HQ](https://arxiv.org/abs/1710.10196) | [P2 weighting](https://github.com/jychoi118/P2-weighting)
 | Human face |256×256| [Diffusion](https://1drv.ms/u/s!AkQjJhxDm0Fyhqp_4gkYjwVRBe8V_w?e=Et3ITH) | [FFHQ](https://arxiv.org/abs/1812.04948) | [P2 weighting](https://github.com/jychoi118/P2-weighting)
 | Church |256×256| Diffusion (Auto) | [LSUN-Bedroom](https://www.yf.io/p/lsun) | [SDEdit](https://github.com/ermongroup/SDEdit) 
 | Bedroom |256×256| Diffusion (Auto) | [LSUN-Church](https://www.yf.io/p/lsun) | [SDEdit](https://github.com/ermongroup/SDEdit) 
@@ -46,6 +47,7 @@ Asyrp works on the checkpoints of pretrained diffusion models.
 - In contrast, you need to download the models pretrained on other datasets in the table and put it in the `./pretrained` directory. 
 - You can manually revise the checkpoint paths and names in the `./configs/paths_config.py` file.
 
+- We used CelebA-HQ pretrained model from SDEdit but we found from P2 weighting is better. **We highly recommend to use P2 weighting models rather than SDEdit.**
 
 ### Datasets 
 To precompute latents and find the direction of *h-space*, you need about 100+ images in the dataset. You can use both **sampled images** from the pretrained models or **real images** from the pretraining dataset. 

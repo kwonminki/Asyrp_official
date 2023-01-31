@@ -682,16 +682,8 @@ class UNetModel(nn.Module):
         :param y: an [N] Tensor of labels, if class-conditional.
         :return: an [N x C x ...] Tensor of outputs.
         """
-        # assert (y is not None) == (
-        #     self.num_classes is not None
-        # ), "must specify y if and only if the model is class-conditional"
-
         hs = []
         emb = self.time_embed(timestep_embedding(timesteps, self.model_channels))
-
-        # if self.num_classes is not None:
-        #     assert y.shape == (x.shape[0],)
-        #     emb = emb + self.label_emb(y)
 
         h = x.type(self.dtype)
         for module in self.input_blocks:
@@ -713,7 +705,7 @@ class UNetModel(nn.Module):
                         delta_h = getattr(self, f"layer_{i}")(h, None if ignore_timestep else emb)
                         h2 += delta_h * hs_coeff[i+1]
                 # use input delta_h  : even tough you does not use DeltaBlock, you need to use index is 0.
-                else:  #DiffStyle
+                else:  #DiffStyle # DiffStyle; Just ignore this code. We will update about it in README.md later.
                     if use_mask:
                         mask = th.zeros_like(h)
                         mask[:,:,4:-1,3:5] = 1.0

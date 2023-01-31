@@ -1,6 +1,6 @@
 data:
-    dataset: "MetFACE"
-    category: "metfaces"
+    dataset: "CelebA_HQ_P2"
+    category: "CelebA_HQ_P2"
     image_size: 256
     channels: 3
     logit_transform: false

@@ -26,6 +26,25 @@ METFACE_DICT = dict(
     use_new_attention_order=False,
 )
 
+CELEBA_HQ_P2_DICT = dict(
+    attention_resolutions="16",
+    channel_mult="",
+    class_cond=False,
+    dropout=0.0,
+    image_size=256,
+    learn_sigma=True,
+    num_channels=128,
+    num_head_channels=64,
+    num_res_blocks=1,
+    resblock_updown=True,
+    use_fp16=False,
+    use_scale_shift_norm=True,
+    num_heads=4,
+    num_heads_upsample=-1,
+    use_checkpoint=False,
+    use_new_attention_order=False,
+)
+
 def diffusion_defaults():
     """
     Defaults for image and classifier training.
@@ -154,6 +173,8 @@ def create_model_and_diffusion(
 def guided_Diffusion(dataset_name = 'MetFACE'):
     if dataset_name == 'MetFACE':
         return create_model(**METFACE_DICT)
+    elif dataset_name =="CelebA_HQ_P2":
+        return create_model(**CELEBA_HQ_P2_DICT)
 
 
 def create_model(

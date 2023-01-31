@@ -114,7 +114,7 @@ class Asyrp(object):
                 init_ckpt = torch.load(MODEL_PATHS[self.config.data.dataset])
             self.learn_sigma = True
             print("Improved diffusion Model loaded.")
-        elif self.config.data.dataset in ["MetFACE"]:
+        elif self.config.data.dataset in ["MetFACE", "CelebA_HQ_P2"]:
             model = guided_Diffusion(self.config.data.dataset)
             init_ckpt = torch.load(MODEL_PATHS[self.config.data.dataset])
             self.learn_sigma = True
