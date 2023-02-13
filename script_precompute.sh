@@ -16,6 +16,8 @@ CUDA_VISIBLE_DEVICES=$gpu python main.py --run_train                        \
                         --n_train_img 100                                   \
                         --n_test_img 32                                     \
                         --bs_train 1                                        \
+                        --get_h_num 1                                       \
+                        --train_delta_block                                 \
                         --t_0 999                                           \
                         --n_inv_step 50                                     \
                         --n_train_step 50                                   \
