@@ -28,12 +28,13 @@ CUDA_VISIBLE_DEVICES=$gpu python main.py --run_test                         \
                         --use_x0_tensor                                     \
                         --hs_coeff_delta_h 1.0                              \
                         --dt_lambda $dt_lambda                              \
-                        --custom_train_dataset_dir "test_images/celeba/styles"                   \
-                        --custom_test_dataset_dir "test_images/celeba/contents"                  \
+                        --custom_train_dataset_dir "test_images/celeba/train"                \
+                        --custom_test_dataset_dir "test_images/celeba/test"                  \
                         --manual_checkpoint_name "smiling_LC_CelebA_HQ_t999_ninv40_ngen40_0.pth" \
                         --add_noise_from_xt                                 \
                         --lpips_addnoise_th 1.2                             \
                         --lpips_edit_th 0.33                                \
+                        --sh_file_name "script_inference.sh"
                          
                         # if you did not compute lpips, use it.
                         # --user_defined_t_edit 500                           \

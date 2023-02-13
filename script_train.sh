@@ -33,8 +33,9 @@ CUDA_VISIBLE_DEVICES=$gpu python main.py --run_train                        \
                         --clip_loss_w 1.0                                   \
                         --l1_loss_w 3.0                                     \
                         --retrain 1                                         \
-                        --custom_train_dataset_dir "test_images/celeba/styles"          \
-                        --custom_test_dataset_dir "test_images/celeba/contents"         \
+                        --custom_train_dataset_dir "test_images/celeba/train"       \
+                        --custom_test_dataset_dir "test_images/celeba/test"         \
+                        --sh_file_name "script_train.sh"
 
                         # --add_noise_from_xt                               \ # if you compute lpips, use it.
                         # --lpips_addnoise_th 1.2                           \ # if you compute lpips, use it.

@@ -21,6 +21,7 @@ CUDA_VISIBLE_DEVICES=$gpu python main.py --run_train                        \
                         --n_train_step 50                                   \
                         --n_test_step 50                                    \
                         --just_precompute                                   \
-                        --custom_train_dataset_dir "test_images/celeba/styles"          \
-                        --custom_test_dataset_dir "test_images/celeba/contents"         \
+                        --custom_train_dataset_dir "test_images/celeba/train"       \
+                        --custom_test_dataset_dir "test_images/celeba/test"         \
+                        --sh_file_name "script_precompute.sh"
 

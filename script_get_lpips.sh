@@ -16,7 +16,8 @@ CUDA_VISIBLE_DEVICES=$gpu python main.py --lpips                            \
                         --n_test_img 32                                     \
                         --t_0 999                                           \
                         --n_inv_step $inv_step                              \
-                        --custom_train_dataset_dir "test_images/celeba/styles"          \
-                        --custom_test_dataset_dir "test_images/celeba/contents"         \
+                        --custom_train_dataset_dir "test_images/celeba/train"       \
+                        --custom_test_dataset_dir "test_images/celeba/test"         \
+                        --sh_file_name "script_get_lpips.sh"
 
 
